@@ -7,17 +7,26 @@ public static class DataModels
     public static int[] heightList;
     public static int[] ageList;
     public static int[] weightList;
+    public static List<APIResponses.Datum> runnerList = new List<APIResponses.Datum>();
     public static int objectCount = 0;
     public static void IncreaseObjectCount()
     {
         objectCount++;
     }
 
+    // public static bool checkingData()
+    // {
+    //     if ((weightList != null) && (heightList != null) && (ageList != null))
+    //     {
+    //         return (weightList.Length>0)&&(heightList.Length>0)&&(ageList.Length>0);
+    //     } else return false;
+    // }
+
     public static bool checkingData()
     {
-        if ((weightList != null) && (heightList != null) && (ageList != null))
+        if(runnerList!=null)
         {
-            return (weightList.Length>0)&&(heightList.Length>0)&&(ageList.Length>0);
+            return (runnerList.Count>0);
         } else return false;
     }
 
@@ -32,5 +41,14 @@ public static class DataModels
     public static void updateAgeList(int[] input)
     {
         ageList = input;
+    }
+
+    public static void getRunners(APIResponses.Root runners)
+    {
+        runnerList = runners.data;
+        // foreach (APIResponses.Datum runner in runnerList)
+        // {
+        //     Debug.Log("runner: "+runner.id+"-"+runner.attributes.name);
+        // }
     }
 }

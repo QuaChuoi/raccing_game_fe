@@ -10,9 +10,14 @@ public class LoadingScene : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(apiService.RequestRandomArr(5,50,80,true,DataModels.updateWeightList));
-        StartCoroutine(apiService.RequestRandomArr(5,150,185,true,DataModels.updateHeightList));
-        StartCoroutine(apiService.RequestRandomArr(5,16,30,true,DataModels.updateAgeList));
+        // StartCoroutine(apiService.RequestRandomArr(5,50,80,true,DataModels.updateWeightList));
+        // StartCoroutine(apiService.RequestRandomArr(5,150,185,true,DataModels.updateHeightList));
+        // StartCoroutine(apiService.RequestRandomArr(5,16,30,true,DataModels.updateAgeList));
+        // StartCoroutine(apiService.Request(APIServices.HttpMethod.GET));
+        // StartCoroutine(apiService.Request<APIResponses.Root>(APIServices.HttpMethod.GET));
+        StartCoroutine(apiService.Request<APIResponses.Root>(APIServices.HttpMethod.GET, DataModels.getRunners));
+        // apiService.Call<APIResponses.Root>(APIServices.HttpMethod.GET, DataModels.getRunners);
+
         StartCoroutine(WaitUntilIncident());
     }
 
@@ -29,7 +34,7 @@ public class LoadingScene : MonoBehaviour
     {
         // yield return new WaitForSecondsRealtime(5);
         yield return new WaitUntil(() => checkingData);
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
         SceneManager.LoadScene(1);
     }
 }

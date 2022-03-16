@@ -50,7 +50,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9954fee33d32149b888762caac913d6c, type: 2}
+  - {fileID: 2100000, guid: b0f4fe6a7838b4c138ecb98c5cd826ff, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -155,6 +155,8 @@ MonoBehaviour:
   height: 165
   weight: 65
   age: 18
+  name: 
+  childObject: {fileID: 1012522232280398208}
 --- !u!114 &7277818673614532862
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -293,7 +295,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9040945362128299657}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.34, z: 0}
+  m_LocalPosition: {x: -0.293, y: 2.34, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 0.1}
   m_Children: []
   m_Father: {fileID: 6673368134288458153}
@@ -350,7 +352,7 @@ TextMesh:
   m_GameObject: {fileID: 9040945362128299657}
   m_Text: Tag
   m_OffsetZ: 0
-  m_CharacterSize: 0.1
+  m_CharacterSize: 0.06
   m_LineSpacing: 1
   m_Anchor: 0
   m_Alignment: 0

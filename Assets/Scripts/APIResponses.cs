@@ -30,4 +30,28 @@ public class APIResponses
         public int[] data;
         public string completionTime;
     }
+
+    [Serializable]
+    public class Attributes
+    {
+        public string runner_id;
+        public string name;
+        public float height;
+        public float weight;
+        public int age;
+        public string color;
+    }
+
+    [Serializable]
+    public class Datum
+    {
+        public int id;
+        public Attributes attributes;
+    }
+
+    [Serializable]
+    public class Root
+    {
+        public List<Datum> data;
+    }
 }

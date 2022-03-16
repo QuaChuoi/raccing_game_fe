@@ -38,19 +38,19 @@ public class ManMoving : MonoBehaviour
         time += Time.deltaTime;
         miniTime += Time.deltaTime;
 
-        if (transform.position.z <= 512)
+        if (transform.position.z <= 312)
         {
             updateAcceleration();
             updateMovementSpeed();
 
             transform.Translate(GameManager.movingVector * currentSpeed * Time.deltaTime, Space.Self);
-            // transform.Translate(transform.forward * currentSpeed * Time.deltaTime);
-            // transform.LookAt(point);
 
             // speedTag.text = currentSpeed.ToString("0.00");  
-            speedTag.text = objectManager.id.ToString();      
+            // speedTag.text = objectManager.id.ToString();      
             // speedTag.text = acceleration.ToString("0.00");   
-            if ((!isFinish) && (transform.position.z >= 505)) {
+            speedTag.text = objectManager.name;
+
+            if ((!isFinish) && (transform.position.z >= 305)) {
                 GameManager.finishList.Add(objectManager.id);
                 isFinish = true;
                 // Debug.Log("add "+ objectManager.id.ToString());

@@ -79,16 +79,16 @@ public class gameManager : MonoBehaviour
         stamp.position = position;    
     }
 
-    public string ArryToString(List<float> input)
-    {
-        string result = "";
-        for (int i= 0; i<input.Count; i++) 
-        {
-            result += input[i].ToString("0.00") + ", ";
-        }
-        // Debug.Log("arrrr :" + result);
-        return result;
-    }
+    // public string ArryToString(List<float> input)
+    // {
+    //     string result = "";
+    //     for (int i= 0; i<input.Count; i++) 
+    //     {
+    //         result += input[i].ToString("0.00") + ", ";
+    //     }
+    //     // Debug.Log("arrrr :" + result);
+    //     return result;
+    // }
 
     public string findRanking()
     {
@@ -101,7 +101,8 @@ public class gameManager : MonoBehaviour
             if (finishList.Count > 0) {
                 for (int i=0; i<finishList.Count; i++)
                 {
-                    result += finishList[i].ToString() + "\n";
+                    // result += finishList[i].ToString() + "\n";
+                    result += DataModels.runnerList[finishList[i]].attributes.name+"\n";
                 }
                 return result;
             }
@@ -109,7 +110,8 @@ public class gameManager : MonoBehaviour
         for (int i=0; i<positionList.Count; i++)
         {
             ObjectPosition temp = objectPositions.Find(item => item.position == positionList[i]);
-            result += temp.id.ToString()+"\n";
+            // result += temp.id.ToString()+"\n";
+            result += DataModels.runnerList[temp.id].attributes.name+"\n";
         }
         return result;
     }
