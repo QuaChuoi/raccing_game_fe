@@ -14,14 +14,6 @@ public static class DataModels
         objectCount++;
     }
 
-    // public static bool checkingData()
-    // {
-    //     if ((weightList != null) && (heightList != null) && (ageList != null))
-    //     {
-    //         return (weightList.Length>0)&&(heightList.Length>0)&&(ageList.Length>0);
-    //     } else return false;
-    // }
-
     public static bool checkingData()
     {
         if(runnerList!=null)

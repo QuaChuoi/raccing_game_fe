@@ -81,46 +81,4 @@ using UnityEngine.Networking;
 
         // }
         
-
-        // public IEnumerator RequestRandomArr(int number, int min, int max, bool replacement, Action<int[]> callback)
-        // {   
-        //     APIRequest.Params parameters = new APIRequest.Params();
-        //     // parameters.apiKey = apiKey;
-        //     parameters.n = number;
-        //     parameters.min = min;
-        //     parameters.max = max;
-        //     parameters.replacement = replacement;
-        //     apiRequest.@params = parameters;
-            
-        //     string jsonData = JsonUtility.ToJson(apiRequest);
-        //     Debug.Log("Request JSON: <color=green>"+jsonData+"</color>");
-        //     Debug.Log("Enum ------ " + HttpMethod.GET.ToString());
-
-        //     var req = new UnityWebRequest(baseUrl, HttpMethod.POST.ToString());
-        //     byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(jsonData);
-        //     req.uploadHandler = (UploadHandler)new UploadHandlerRaw(jsonToSend);
-        //     req.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
-        //     req.SetRequestHeader("Content-Type", "application/json");
-        //     req.timeout = 30;
-
-        //     //Send the request then wait here until it returns
-        //     yield return req.SendWebRequest();
-
-        //     if (req.result == UnityWebRequest.Result.ConnectionError)
-        //     {
-        //         Debug.Log("Error While Sending: " + req.error);
-        //     }
-        //     else
-        //     {
-        //         Debug.LogFormat("Received text: <color=yellow>{0}</color>", req.downloadHandler.text);
-        //         // Debug.LogFormat("Reviced data: <color=green>{0}</color>", req.downloadHandler.data);
-        //         Debug.Log("Received: error" + req.downloadHandler.error);
-        //         Debug.Log("result: " + req.result);
-
-        //         byte[] result = req.downloadHandler.data;
-        //         string dataJSON = System.Text.Encoding.Default.GetString(result);
-        //         APIResponses.RandomResponse randomResponse = JsonUtility.FromJson<APIResponses.RandomResponse>(dataJSON);
-        //         callback(randomResponse.result.random.data);
-        //     }
-        // }
     }

@@ -38,27 +38,21 @@ public class ManMoving : MonoBehaviour
         time += Time.deltaTime;
         miniTime += Time.deltaTime;
 
-        if (transform.position.z <= 312)
+        if (transform.position.z <= (266 - setSpaceBetween()))
         {
             updateAcceleration();
             updateMovementSpeed();
 
-            transform.Translate(GameManager.movingVector * currentSpeed * Time.deltaTime, Space.Self);
-
-            // speedTag.text = currentSpeed.ToString("0.00");  
-            // speedTag.text = objectManager.id.ToString();      
-            // speedTag.text = acceleration.ToString("0.00");   
+            transform.Translate(GameManager.movingVector * currentSpeed * Time.deltaTime, Space.Self); 
             speedTag.text = objectManager.name;
 
-            if ((!isFinish) && (transform.position.z >= 305)) {
+            if ((!isFinish) && (transform.position.z >= 250)) {
                 GameManager.finishList.Add(objectManager.id);
+                GameManager.finishTime.Add(Time.timeSinceLevelLoad);
                 isFinish = true;
                 // Debug.Log("add "+ objectManager.id.ToString());
             }
         } else {
-            // if (!isFinish) {
-            //     GameManager.addFinishList(objectManager.id);
-            // }
             animation.Play("Base Layer.Stand", 0, 0.25f);
             // animation.Play("Base Layer.Swing Dancing", 0, 0.25f);
         }
@@ -148,5 +142,11 @@ public class ManMoving : MonoBehaviour
                 // + (1.00f - (GameManager.heightFactorAffect + GameManager.weightFactorAffect + GameManager.ageFactorAffect))
                 +1.00f
             );
+    }
+
+    private int setSpaceBetween()
+    {
+        var n = GameManager.finishList!=null ? GameManager.finishList.Count : 0;
+        return 2*n;
     }
 }

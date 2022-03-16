@@ -11,6 +11,8 @@ using UnityEngine.UI;
 public class gameManager : MonoBehaviour
 {
     public TextMeshProUGUI rankingString;
+    public TextMeshProUGUI timming;
+
     [Header("Speed Setting")]
     public float moveSpeed = 3.50f;
     public float topSpeed = 4.00f;
@@ -31,8 +33,8 @@ public class gameManager : MonoBehaviour
     public float ageFactorAffect = 0.10f;
     public float startSpeedFactor = 0.1f;
     public Button restartBtn;
-    public int[] rankingList =  {0,0,0,0,0};
     public List<int> finishList;    
+    public List<float> finishTime;
     private List<float> positionList = new List<float>(){
         0.0f,0.0f,0.0f,0.0f,0.0f
     };
@@ -58,17 +60,22 @@ public class gameManager : MonoBehaviour
         restartBtn.gameObject.SetActive(false);
         restartBtn.onClick.AddListener(restartGame);
     }
+
+    void Update()
+    {
+        timming.text = Time.timeSinceLevelLoad.ToString("0.00");
+    }
+
     void LateUpdate()
     {
-        // objectPositions.ForEach(i => Debug.Log( " list   "+i.id+" ------ "+i.position.ToString("0.00")));
-        // Debug.Log("rankkkkkkk   "+findRanking());
+
         rankingString.text = findRanking();
         if (finishList!= null)
         {
-        if (finishList.Count>=5)
-        {
-            restartBtn.gameObject.SetActive(true);
-        }
+            if (finishList.Count>=5)
+            {
+                restartBtn.gameObject.SetActive(true);
+            }
         }
     }
     
@@ -79,30 +86,17 @@ public class gameManager : MonoBehaviour
         stamp.position = position;    
     }
 
-    // public string ArryToString(List<float> input)
-    // {
-    //     string result = "";
-    //     for (int i= 0; i<input.Count; i++) 
-    //     {
-    //         result += input[i].ToString("0.00") + ", ";
-    //     }
-    //     // Debug.Log("arrrr :" + result);
-    //     return result;
-    // }
-
     public string findRanking()
     {
         string result = "";
         positionList.Sort();
         positionList.Reverse();
-        // this.ArryToString(positionList);
         if (finishList != null) 
         {
             if (finishList.Count > 0) {
                 for (int i=0; i<finishList.Count; i++)
                 {
-                    // result += finishList[i].ToString() + "\n";
-                    result += DataModels.runnerList[finishList[i]].attributes.name+"\n";
+                    result += DataModels.runnerList[finishList[i]].attributes.name+"-"+finishTime[i].ToString("0.00")+"\n";
                 }
                 return result;
             }
@@ -110,7 +104,6 @@ public class gameManager : MonoBehaviour
         for (int i=0; i<positionList.Count; i++)
         {
             ObjectPosition temp = objectPositions.Find(item => item.position == positionList[i]);
-            // result += temp.id.ToString()+"\n";
             result += DataModels.runnerList[temp.id].attributes.name+"\n";
         }
         return result;
@@ -118,13 +111,9 @@ public class gameManager : MonoBehaviour
 
     public void restartGame() 
     {
-        rankingList = new int[] {0,0,0,0,0};
         finishList = null;
+        finishTime = null;
         SceneManager.LoadScene(0);
+        DataModels.objectCount = 0;
     }
-
-    // public void addFinishList(int id)
-    // {
-    //     finishList.Add(id);
-    // }
 }
