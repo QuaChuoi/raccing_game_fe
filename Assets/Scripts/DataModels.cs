@@ -2,11 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public class RunnerResult
+{
+    public int rankResult;
+    public APIResponses.Datum runner;
+    public float timeResult;
+}
+
 public static class DataModels
 {   
-    public static int[] heightList;
-    public static int[] ageList;
-    public static int[] weightList;
+    public static List<RunnerResult> runnerListResults = new List<RunnerResult>();
     public static List<APIResponses.Datum> runnerList = new List<APIResponses.Datum>();
     public static int objectCount = 0;
     public static void IncreaseObjectCount()
@@ -22,25 +27,14 @@ public static class DataModels
         } else return false;
     }
 
-    public static void updateWeightList(int[] input)
-    {
-        weightList = input;
-    }
-    public static void updateHeightList(int[] input)
-    {
-        heightList = input;
-    }
-    public static void updateAgeList(int[] input)
-    {
-        ageList = input;
-    }
-
     public static void getRunners(APIResponses.Root runners)
     {
         runnerList = runners.data;
-        // foreach (APIResponses.Datum runner in runnerList)
-        // {
-        //     Debug.Log("runner: "+runner.id+"-"+runner.attributes.name);
-        // }
+    }
+
+    public static void addRunnerListResults(int rank, APIResponses.Datum runner, float time)
+    {
+        RunnerResult runnerResult = new RunnerResult{ rankResult = rank, runner = runner, timeResult = time};
+        runnerListResults.Add(runnerResult);
     }
 }

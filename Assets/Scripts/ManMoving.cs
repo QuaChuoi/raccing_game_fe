@@ -50,11 +50,20 @@ public class ManMoving : MonoBehaviour
                 GameManager.finishList.Add(objectManager.id);
                 GameManager.finishTime.Add(Time.timeSinceLevelLoad);
                 isFinish = true;
+                int rank = DataModels.runnerListResults==null ? 1 : DataModels.runnerListResults.Count + 1;
+                DataModels.addRunnerListResults(rank, objectManager.runner, Time.timeSinceLevelLoad);
                 // Debug.Log("add "+ objectManager.id.ToString());
+
             }
         } else {
-            animation.Play("Base Layer.Stand", 0, 0.25f);
-            // animation.Play("Base Layer.Swing Dancing", 0, 0.25f);
+            if (objectManager.id == GameManager.finishList[0])
+            {
+                animation.Play("Swing Dancing");
+            } else
+            {
+                animation.Play("Stand");
+            }
+            
         }
         GameManager.getObjectPosition(objectManager.id, transform.position.z);
     }

@@ -9,6 +9,7 @@ public class ObjectManager : MonoBehaviour
     public float weight = 65.0f;
     public float age = 18.0f;
     public string name;
+    public APIResponses.Datum runner;
     gameManager GameManager;
     private Vector3 scaleVector;
     Material material;
@@ -37,10 +38,11 @@ public class ObjectManager : MonoBehaviour
     {
         setObjectColor();
         this.id = DataModels.objectCount;
-        this.weight = DataModels.runnerList[DataModels.objectCount].attributes.weight;
-        this.height = DataModels.runnerList[DataModels.objectCount].attributes.height;
-        this.age = DataModels.runnerList[DataModels.objectCount].attributes.age;
-        this.name = DataModels.runnerList[DataModels.objectCount].attributes.name;
+        this.runner = DataModels.runnerList[id];
+        this.weight = runner.attributes.weight;
+        this.height = runner.attributes.height;
+        this.age = runner.attributes.age;
+        this.name = runner.attributes.name;
         Debug.LogFormat("set weight:<color=blue>{0}</color> height:<color=green>{1}</color> age:<color=red>{2}</color> for <color=yellow>object[{3}]</color>", weight.ToString(), height.ToString(), age.ToString(), DataModels.objectCount.ToString()+"-"+name);
         DataModels.IncreaseObjectCount();
     }

@@ -1,7 +1,6 @@
 
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using TMPro;
@@ -38,6 +37,9 @@ public class gameManager : MonoBehaviour
     private List<float> positionList = new List<float>(){
         0.0f,0.0f,0.0f,0.0f,0.0f
     };
+    private bool isFinish;
+    GameObject scoreBoard;
+    ScoreTable scoreTable;
 
     public class ObjectPosition
     {
@@ -57,8 +59,15 @@ public class gameManager : MonoBehaviour
 
     void Awake() 
     {
+        isFinish = false;
+        GameObject canvas = GameObject.FindGameObjectWithTag("Canvas");
+        scoreBoard = canvas.transform.GetChild(0).gameObject;
+        scoreTable = scoreBoard.GetComponent<ScoreTable>();
+        scoreBoard.gameObject.SetActive(false);
         restartBtn.gameObject.SetActive(false);
         restartBtn.onClick.AddListener(restartGame);
+        DataModels.runnerListResults = null;
+
     }
 
     void Update()
@@ -68,13 +77,14 @@ public class gameManager : MonoBehaviour
 
     void LateUpdate()
     {
-
         rankingString.text = findRanking();
-        if (finishList!= null)
+        if (finishList!=null && !isFinish)
         {
             if (finishList.Count>=5)
             {
-                restartBtn.gameObject.SetActive(true);
+                scoreTable.updateScoreboard();
+                isFinish = true;
+                StartCoroutine(finishRace());
             }
         }
     }
@@ -113,7 +123,15 @@ public class gameManager : MonoBehaviour
     {
         finishList = null;
         finishTime = null;
-        SceneManager.LoadScene(0);
         DataModels.objectCount = 0;
+        DataModels.runnerList = null;
+        SceneManager.LoadScene(0);
+    }
+
+    IEnumerator finishRace()
+    {
+        yield return new WaitForSeconds(4);
+        scoreBoard.gameObject.SetActive(true);
+        restartBtn.gameObject.SetActive(true);
     }
 }
