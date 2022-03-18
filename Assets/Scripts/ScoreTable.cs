@@ -13,14 +13,6 @@ public class ScoreTable : MonoBehaviour
 
         entryTemplate.gameObject.SetActive(false);
         
-        
-        
-    }
-
-    // Start is called before the first frame update
-    private void Start()
-    {
-        
     }
 
     public void updateScoreboard(){
@@ -42,10 +34,21 @@ public class ScoreTable : MonoBehaviour
                 case 3: rankString = "3rd"; break;
             }
 
-            entryTransform.Find("rankText").GetComponent<UnityEngine.UI.Text>().text = rankString;
-            entryTransform.Find("nameText").GetComponent<UnityEngine.UI.Text>().text = DataModels.runnerListResults[i].runner.id+" - "+DataModels.runnerListResults[i].runner.attributes.name+" - "+DataModels.runnerListResults[i].runner.attributes.runner_id;
-            entryTransform.Find("timeText").GetComponent<UnityEngine.UI.Text>().text = DataModels.runnerListResults[i].timeResult.ToString("0.00");
+            string nameString = DataModels.runnerListResults[i].runner.id+" - "+DataModels.runnerListResults[i].runner.attributes.name+" - "+DataModels.runnerListResults[i].runner.attributes.runner_id;
+            // entryTransform.Find("rankText").GetComponent<UnityEngine.UI.Text>().text = rankString;
+            // entryTransform.Find("nameText").GetComponent<UnityEngine.UI.Text>().text = DataModels.runnerListResults[i].runner.id+" - "+DataModels.runnerListResults[i].runner.attributes.name+" - "+DataModels.runnerListResults[i].runner.attributes.runner_id;
+            // entryTransform.Find("timeText").GetComponent<UnityEngine.UI.Text>().text = DataModels.runnerListResults[i].timeResult.ToString("0.00");
+            updateEntryTransform(ref entryTransform, rankString, nameString, DataModels.runnerListResults[i].timeResult);
         }
+        } else {
+            Debug.Log("result LIST IS NULL");
         }
+    }
+
+    private void updateEntryTransform(ref Transform entryTransform, string rank, string name, float time)
+    {
+        entryTransform.Find("rankText").GetComponent<UnityEngine.UI.Text>().text = rank;
+        entryTransform.Find("nameText").GetComponent<UnityEngine.UI.Text>().text = name;
+        entryTransform.Find("timeText").GetComponent<UnityEngine.UI.Text>().text = time.ToString("0.00");
     }
 }

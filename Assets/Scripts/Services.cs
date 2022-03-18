@@ -5,14 +5,14 @@ using System;
 using UnityEngine;
 using UnityEngine.Networking;
 
-
+public enum HttpMethod
+{
+    POST,
+    GET
+}
     public class APIServices
     {
-        public enum HttpMethod
-        {
-            POST,
-            GET
-        }
+        
         private APIServices(){}
         private static APIServices _instance = null;
         public static APIServices Instance {

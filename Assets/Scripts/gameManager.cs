@@ -12,6 +12,7 @@ public class gameManager : MonoBehaviour
     public TextMeshProUGUI rankingString;
     public TextMeshProUGUI timming;
 
+    public int trackLenght = 222;
     [Header("Speed Setting")]
     public float moveSpeed = 3.50f;
     public float topSpeed = 4.00f;
@@ -32,8 +33,6 @@ public class gameManager : MonoBehaviour
     public float ageFactorAffect = 0.10f;
     public float startSpeedFactor = 0.1f;
     public Button restartBtn;
-    public List<int> finishList;    
-    public List<float> finishTime;
     private List<float> positionList = new List<float>(){
         0.0f,0.0f,0.0f,0.0f,0.0f
     };
@@ -60,14 +59,15 @@ public class gameManager : MonoBehaviour
     void Awake() 
     {
         isFinish = false;
+
         GameObject canvas = GameObject.FindGameObjectWithTag("Canvas");
         scoreBoard = canvas.transform.GetChild(0).gameObject;
         scoreTable = scoreBoard.GetComponent<ScoreTable>();
         scoreBoard.gameObject.SetActive(false);
         restartBtn.gameObject.SetActive(false);
         restartBtn.onClick.AddListener(restartGame);
-        DataModels.runnerListResults = null;
 
+        // Debug.Log("runner list count: "+DataModels.runnerList.Count.ToString());
     }
 
     void Update()
@@ -78,9 +78,9 @@ public class gameManager : MonoBehaviour
     void LateUpdate()
     {
         rankingString.text = findRanking();
-        if (finishList!=null && !isFinish)
+        if (DataModels.runnerListResults!=null && !isFinish)
         {
-            if (finishList.Count>=5)
+            if (DataModels.runnerListResults.Count>=5)
             {
                 scoreTable.updateScoreboard();
                 isFinish = true;
@@ -101,36 +101,36 @@ public class gameManager : MonoBehaviour
         string result = "";
         positionList.Sort();
         positionList.Reverse();
-        if (finishList != null) 
+        if (DataModels.runnerListResults != null) 
         {
-            if (finishList.Count > 0) {
-                for (int i=0; i<finishList.Count; i++)
+            if (DataModels.runnerListResults.Count > 0) {
+                for (int i=0; i<DataModels.runnerListResults.Count; i++)
                 {
-                    result += DataModels.runnerList[finishList[i]].attributes.name+"-"+finishTime[i].ToString("0.00")+"\n";
+                    result += DataModels.runnerListResults[i].runner.attributes.name+"-"+DataModels.runnerListResults[i].timeResult.ToString("0.00")+"\n";
                 }
                 return result;
             }
-        }
-        for (int i=0; i<positionList.Count; i++)
-        {
-            ObjectPosition temp = objectPositions.Find(item => item.position == positionList[i]);
-            result += DataModels.runnerList[temp.id].attributes.name+"\n";
+            for (int i=0; i<DataModels.runnerList.Count; i++)
+            {
+                ObjectPosition temp = objectPositions.Find(item => item.position == positionList[i]);
+                result += DataModels.runnerList[temp.id].attributes.name+"\n";
+            }
         }
         return result;
     }
 
     public void restartGame() 
     {
-        finishList = null;
-        finishTime = null;
         DataModels.objectCount = 0;
-        DataModels.runnerList = null;
+        DataModels.runnerList.Clear();
+        DataModels.runnerListResults.Clear();
+
         SceneManager.LoadScene(0);
     }
 
     IEnumerator finishRace()
     {
-        yield return new WaitForSeconds(4);
+        yield return new WaitForSeconds(5);
         scoreBoard.gameObject.SetActive(true);
         restartBtn.gameObject.SetActive(true);
     }

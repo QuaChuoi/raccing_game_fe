@@ -11,7 +11,7 @@ public class RunnerResult
 
 public static class DataModels
 {   
-    public static List<RunnerResult> runnerListResults = new List<RunnerResult>();
+    public static List<RunnerResult> runnerListResults;
     public static List<APIResponses.Datum> runnerList = new List<APIResponses.Datum>();
     public static int objectCount = 0;
     public static void IncreaseObjectCount()
@@ -35,6 +35,10 @@ public static class DataModels
     public static void addRunnerListResults(int rank, APIResponses.Datum runner, float time)
     {
         RunnerResult runnerResult = new RunnerResult{ rankResult = rank, runner = runner, timeResult = time};
-        runnerListResults.Add(runnerResult);
+        if(runnerResult!= null){
+            DataModels.runnerListResults.Add(runnerResult);
+        } else {
+            Debug.Log("NUL RUNNER RESULT");
+        }
     }
 }

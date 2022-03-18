@@ -13,7 +13,8 @@ public class ManMoving : MonoBehaviour
     private float miniTime = 0.0f;
     private float acceleration = 0.0f;
     public TextMesh speedTag;
-    private bool isFinish = false;
+    private bool isFinish;
+    private bool isStopRunning;
     /// Awake is called when the script instance is being loaded.
     void Awake()
     {
@@ -22,6 +23,9 @@ public class ManMoving : MonoBehaviour
         animation = gameObject.GetComponent<Animator>();
         objectManager = GetComponent<ObjectManager>();
         point = GameManager.transform.position;
+
+        isStopRunning = false;
+        isFinish = false;
     }
     // Start is called before the first frame update
     void Start()
@@ -38,7 +42,7 @@ public class ManMoving : MonoBehaviour
         time += Time.deltaTime;
         miniTime += Time.deltaTime;
 
-        if (transform.position.z <= (266 - setSpaceBetween()))
+        if (transform.position.z <= ((GameManager.trackLenght + 16) - setSpaceBetween()))
         {
             updateAcceleration();
             updateMovementSpeed();
@@ -46,24 +50,23 @@ public class ManMoving : MonoBehaviour
             transform.Translate(GameManager.movingVector * currentSpeed * Time.deltaTime, Space.Self); 
             speedTag.text = objectManager.name;
 
-            if ((!isFinish) && (transform.position.z >= 250)) {
-                GameManager.finishList.Add(objectManager.id);
-                GameManager.finishTime.Add(Time.timeSinceLevelLoad);
-                isFinish = true;
+            if ((!isFinish) && (transform.position.z >= GameManager.trackLenght)) {
+                this.isFinish = true;
                 int rank = DataModels.runnerListResults==null ? 1 : DataModels.runnerListResults.Count + 1;
                 DataModels.addRunnerListResults(rank, objectManager.runner, Time.timeSinceLevelLoad);
-                // Debug.Log("add "+ objectManager.id.ToString());
-
             }
         } else {
-            if (objectManager.id == GameManager.finishList[0])
+            if (!isStopRunning)
+            {
+                isStopRunning = true;
+            if (objectManager.runner.id == DataModels.runnerListResults[0].runner.id)
             {
                 animation.Play("Swing Dancing");
             } else
             {
                 animation.Play("Stand");
             }
-            
+            }
         }
         GameManager.getObjectPosition(objectManager.id, transform.position.z);
     }
@@ -155,7 +158,7 @@ public class ManMoving : MonoBehaviour
 
     private int setSpaceBetween()
     {
-        var n = GameManager.finishList!=null ? GameManager.finishList.Count : 0;
+        var n = DataModels.runnerListResults!=null ? DataModels.runnerListResults.Count : 0;
         return 2*n;
     }
 }

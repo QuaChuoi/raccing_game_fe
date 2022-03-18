@@ -8,16 +8,16 @@ public class LoadingScene : MonoBehaviour
     public bool checkingData = false;
     APIServices apiService = APIServices.Instance;
     // Start is called before the first frame update
+    private void Awake() {
+        DataModels.runnerListResults = new List<RunnerResult>();
+        DataModels.runnerList = new List<APIResponses.Datum>();
+    }
+
     void Start()
     {
-        // StartCoroutine(apiService.RequestRandomArr(5,50,80,true,DataModels.updateWeightList));
-        // StartCoroutine(apiService.RequestRandomArr(5,150,185,true,DataModels.updateHeightList));
-        // StartCoroutine(apiService.RequestRandomArr(5,16,30,true,DataModels.updateAgeList));
-        // StartCoroutine(apiService.Request(APIServices.HttpMethod.GET));
-        // StartCoroutine(apiService.Request<APIResponses.Root>(APIServices.HttpMethod.GET));
-        StartCoroutine(apiService.Request<APIResponses.Root>(APIServices.HttpMethod.GET, DataModels.getRunners));
-        // apiService.Call<APIResponses.Root>(APIServices.HttpMethod.GET, DataModels.getRunners);
-
+        // call web requests here
+        StartCoroutine(apiService.Request<APIResponses.Root>(HttpMethod.GET, DataModels.getRunners));
+        
         StartCoroutine(WaitUntilIncident());
     }
 
@@ -32,7 +32,6 @@ public class LoadingScene : MonoBehaviour
 
     IEnumerator WaitUntilIncident()
     {
-        // yield return new WaitForSecondsRealtime(5);
         yield return new WaitUntil(() => checkingData);
         yield return new WaitForSeconds(2);
         SceneManager.LoadScene(1);
