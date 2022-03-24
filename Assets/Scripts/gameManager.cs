@@ -39,6 +39,8 @@ public class gameManager : MonoBehaviour
     private bool isFinish;
     GameObject scoreBoard;
     ScoreTable scoreTable;
+    APIServices apiService = APIServices.Instance;
+
 
     public class ObjectPosition
     {
@@ -85,6 +87,24 @@ public class gameManager : MonoBehaviour
                 scoreTable.updateScoreboard();
                 isFinish = true;
                 StartCoroutine(finishRace());
+
+                //post result to BE
+                var parameters = new APIRequest.Root();
+                var data = new APIRequest.Data();
+                var resList = new List<APIRequest.Singleresult>();
+                for (int i=0; i< DataModels.runnerListResults.Count; i++) {
+                
+                var result = new APIRequest.Singleresult{ 
+                    rank =  DataModels.runnerListResults[i].rankResult,
+                    runnername =  DataModels.runnerListResults[i].runner.attributes.name,
+                    runTime =   DataModels.runnerListResults[i].timeResult     
+                };
+                resList.Add(result);
+                }
+                data.singleresult = resList;
+                parameters.data = data;
+
+                StartCoroutine(apiService.PostResultRequest<APIRequest.Root>(Router.postResults, HttpMethod.POST, parameters, null));
             }
         }
     }
@@ -130,7 +150,7 @@ public class gameManager : MonoBehaviour
 
     IEnumerator finishRace()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(6);
         scoreBoard.gameObject.SetActive(true);
         restartBtn.gameObject.SetActive(true);
     }

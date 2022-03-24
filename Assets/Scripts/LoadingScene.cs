@@ -16,8 +16,9 @@ public class LoadingScene : MonoBehaviour
     void Start()
     {
         // call web requests here
-        StartCoroutine(apiService.Request<APIResponses.Root>(HttpMethod.GET, DataModels.getRunners));
-        
+        StartCoroutine(apiService.Request<APIResponses.Root>(Router.getRunners, HttpMethod.GET, DataModels.getRunners));
+        // StartCoroutine(apiService.Request<APIResponses.Root>(Router.postResults, HttpMethod.GET, (response) => {}));
+
         StartCoroutine(WaitUntilIncident());
     }
 

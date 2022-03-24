@@ -6,21 +6,22 @@ using System;
 public class APIRequest
 {
     [Serializable]
-    public class Params
+    public class Singleresult
     {
-        public string apiKey;
-        public int n;
-        public int min;
-        public int max;
-        public bool replacement;
+        public int rank;
+        public string runnername;
+        public float runTime;
+    }
+
+    [Serializable]
+    public class Data
+    {
+        public List<Singleresult> singleresult;
     }
 
     [Serializable]
     public class Root
     {
-        public string jsonrpc = "2.0";
-        public string method = "generateIntegers";
-        public int id = 11;
-        public Params @params;
+        public Data data;
     }
 }

@@ -41,4 +41,18 @@ public static class DataModels
             Debug.Log("NUL RUNNER RESULT");
         }
     }
+    
+    public static List<APIRequest.Singleresult> generateResults(){
+        var results = new List<APIRequest.Singleresult>();
+            for (int i=0; i< runnerListResults.Count; i++) {
+                var result = new APIRequest.Singleresult{ 
+                    rank = runnerListResults[i].rankResult,
+                    runnername = runnerListResults[i].runner.attributes.name,
+                    runTime =  runnerListResults[i].timeResult     
+                }; 
+                results.Add(result);
+            }
+        Debug.Log("results.cout :"+results.Count.ToString());
+        return results;
+    }
 }
